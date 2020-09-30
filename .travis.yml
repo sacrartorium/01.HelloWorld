@@ -1,4 +1,7 @@
 language: cpp
+env:
+  global:
+    - NAMEP=helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb
 before_script:
 - sudo apt-get install libboost-test-dev -y
 - echo "deb http://archive.ubuntu.com/ubuntu xenial main universe" | sudo tee -a /etc/apt/sources.list
@@ -12,5 +15,5 @@ deploy:
   provider: script
   skip_cleanup: true
   script:
-  - echo curl -v -T helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -usacrartorium:$BINTRAY_API_KEY "https://api.bintray.com/content/sacrartorium/01.HelloWorld/otus/$TRAVIS_BUILD_NUMBER/helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
-  - curl -v -T helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb -usacrartorium:$BINTRAY_API_KEY "https://api.bintray.com/content/sacrartorium/01.HelloWorld/otus/$TRAVIS_BUILD_NUMBER/helloworld-0.0.$TRAVIS_BUILD_NUMBER-Linux.deb;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
+  - echo curl -v -T $NAMEP -usacrartorium:$BINTRAY_API_KEY "https://api.bintray.com/content/sacrartorium/01.HelloWorld/otus/$TRAVIS_BUILD_NUMBER/$NAMEP;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1" \
+     && curl -v -T $NAMEP -usacrartorium:$BINTRAY_API_KEY "https://api.bintray.com/content/sacrartorium/01.HelloWorld/otus/$TRAVIS_BUILD_NUMBER/$NAMEP;deb_distribution=trusty;deb_component=main;deb_architecture=amd64;publish=1"
